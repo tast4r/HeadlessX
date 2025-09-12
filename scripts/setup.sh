@@ -14,11 +14,15 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-# Check if running as root
+# Check if running as root and warn (but allow)
 if [[ $EUID -eq 0 ]]; then
-   echo -e "${RED}Error: This script should not be run as root${NC}"
-   echo "Please run as a regular user with sudo privileges"
-   exit 1
+   echo -e "${YELLOW}⚠️ Warning: Running as root user${NC}"
+   echo -e "${YELLOW}   For production, consider running as a regular user with sudo privileges${NC}"
+   echo -e "${YELLOW}   Continuing setup...${NC}"
+   echo ""
+   SUDO_CMD=""
+else
+   SUDO_CMD="sudo"
 fi
 
 # Function to print status
@@ -36,14 +40,14 @@ print_error() {
 
 # Update system
 echo "📦 Updating system packages..."
-sudo apt update && sudo apt upgrade -y
+$SUDO_CMD apt update && $SUDO_CMD apt upgrade -y
 print_status "System updated"
 
 # Install Node.js 20 LTS
 echo "📥 Installing Node.js 20 LTS..."
 if ! command -v node &> /dev/null; then
-    curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
-    sudo apt install -y nodejs build-essential
+    curl -fsSL https://deb.nodesource.com/setup_20.x | $SUDO_CMD -E bash -
+    $SUDO_CMD apt install -y nodejs build-essential
     print_status "Node.js installed: $(node -v)"
 else
     print_status "Node.js already installed: $(node -v)"
@@ -51,7 +55,7 @@ fi
 
 # Install system dependencies for Playwright
 echo "🔧 Installing system dependencies..."
-sudo apt install -y \
+$SUDO_CMD apt install -y \
     libatk1.0-0 libatk-bridge2.0-0 libcups2 libatspi2.0-0 \
     libxcomposite1 libxdamage1 libxfixes3 libxrandr2 libgbm1 \
     libcairo2 libpango-1.0-0 libasound2 fonts-liberation \
@@ -84,7 +88,7 @@ print_status "Logs directory created"
 # Install PM2 globally
 echo "⚙️ Installing PM2 process manager..."
 if ! command -v pm2 &> /dev/null; then
-    sudo npm install -g pm2
+    $SUDO_CMD npm install -g pm2
     print_status "PM2 installed"
 else
     print_status "PM2 already installed"
@@ -93,32 +97,32 @@ fi
 # Install Nginx
 echo "🌐 Installing and configuring Nginx..."
 if ! command -v nginx &> /dev/null; then
-    sudo apt install -y nginx
+    $SUDO_CMD apt install -y nginx
     print_status "Nginx installed"
 else
     print_status "Nginx already installed"
 fi
 
 # Copy Nginx configuration
-sudo cp nginx/headlessx.conf /etc/nginx/sites-available/headlessx
-sudo ln -sf /etc/nginx/sites-available/headlessx /etc/nginx/sites-enabled/
-sudo rm -f /etc/nginx/sites-enabled/default
-sudo nginx -t
-sudo systemctl reload nginx
+$SUDO_CMD cp nginx/headlessx.conf /etc/nginx/sites-available/headlessx
+$SUDO_CMD ln -sf /etc/nginx/sites-available/headlessx /etc/nginx/sites-enabled/
+$SUDO_CMD rm -f /etc/nginx/sites-enabled/default
+$SUDO_CMD nginx -t
+$SUDO_CMD systemctl reload nginx
 print_status "Nginx configured for headlessx.domain.com"
 
 # Create website directory
-sudo mkdir -p /var/www/headlessx
-sudo cp -r website/out/* /var/www/headlessx/
-sudo chown -R www-data:www-data /var/www/headlessx
+$SUDO_CMD mkdir -p /var/www/headlessx
+$SUDO_CMD cp -r website/out/* /var/www/headlessx/
+$SUDO_CMD chown -R www-data:www-data /var/www/headlessx
 print_status "Website files deployed"
 
 # Configure firewall
 echo "🔥 Configuring firewall..."
-sudo ufw allow 22    # SSH
-sudo ufw allow 80    # HTTP
-sudo ufw allow 443   # HTTPS
-sudo ufw --force enable
+$SUDO_CMD ufw allow 22    # SSH
+$SUDO_CMD ufw allow 80    # HTTP
+$SUDO_CMD ufw allow 443   # HTTPS
+$SUDO_CMD ufw --force enable
 print_status "Firewall configured"
 
 # Create environment file
@@ -132,7 +136,7 @@ fi
 
 # Test the server
 echo "🧪 Testing server startup..."
-timeout 10s node server.js &
+timeout 10s node src/server.js &
 SERVER_PID=$!
 sleep 5
 
@@ -140,7 +144,7 @@ if kill -0 $SERVER_PID 2>/dev/null; then
     print_status "Server test successful"
     kill $SERVER_PID
 else
-    print_error "Server test failed"
+    print_error "Server test failed - but continuing..."
 fi
 
 echo ""
@@ -154,8 +158,8 @@ echo "   - Point headlessx.domain.com to your server IP"
 echo "   - Wait for DNS propagation (1-24 hours)"
 echo ""
 echo "2. Configure SSL certificate:"
-echo "   sudo apt install certbot python3-certbot-nginx"
-echo "   sudo certbot --nginx -d headlessx.domain.com"
+echo "   ${SUDO_CMD} apt install certbot python3-certbot-nginx"
+echo "   ${SUDO_CMD} certbot --nginx -d headlessx.domain.com"
 echo ""
 echo "3. Update the TOKEN in .env file:"
 echo "   nano .env"

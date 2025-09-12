@@ -6,13 +6,13 @@ module.exports = {
     exec_mode: 'fork',
     env: {
       NODE_ENV: 'production',
-      PORT: 3000,
-      TOKEN: 'SaifyXPRO@112255'
+      PORT: process.env.PORT || 3000,
+      TOKEN: process.env.TOKEN // REQUIRED: Set this in your environment
     },
     env_development: {
       NODE_ENV: 'development',
-      PORT: 3000,
-      TOKEN: 'SaifyXPRO@112255'
+      PORT: process.env.PORT || 3000,
+      TOKEN: process.env.TOKEN // REQUIRED: Set this in your environment
     },
     error_file: '../logs/err.log',
     out_file: '../logs/out.log',

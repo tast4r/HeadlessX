@@ -1,6 +1,6 @@
 # HeadlessX v1.1.0 - Open Source Browserless Web Scraping API
 
-A powerful, production-ready browserless alternative that renders JavaScript-heavy websites and provides multiple output formats. HeadlessX features advanced timeout handling, partial content recovery, emergency extraction, and comprehensive API endpoints with human-like behavior simulation.
+A powerful, production-ready browserless web scraping API that renders JavaScript-heavy websites with human-like behavior simulation. Built with Node.js and Playwright, HeadlessX provides multiple output formats and advanced anti-detection techniques.
 
 ## ✨ Key Features
 
@@ -16,7 +16,7 @@ A powerful, production-ready browserless alternative that renders JavaScript-hea
 - 🐳 **Docker Ready** - Complete containerization support
 - 📊 **Comprehensive Monitoring** - Health checks and detailed status
 - 🛡️ **Anti-Detection** - 40+ stealth techniques, realistic user agents
-- 🌟 **Beautiful Landing Page** - Professional website included
+- 🌟 **Beautiful Landing Page** - Professional Next.js website included
 
 ## 🚀 Quick Start
 
@@ -46,21 +46,26 @@ export TOKEN="your_generated_secure_token_here"
 
 ```bash
 # 1. Clone the HeadlessX project
-git clone https://github.com/SaifyXPRO/HeadlessX.git
-cd HeadlessX
+git clone https://github.com/saifyxpro/headlessx.git
+cd headlessx
 
-# 2. Generate a secure token
+# 2. Set up environment variables
+cp .env.example .env
+# Edit .env with your domain and secure token
+nano .env
+
+# 3. Generate a secure token
 export TOKEN=$(openssl rand -hex 32)
 echo "Your secure token: $TOKEN"
 # SAVE THIS TOKEN! You'll need it for API calls
 
-# 3. Start with docker-compose (serves both website and API)
+# 4. Start with docker-compose (serves both website and API)
 docker-compose -f docker/docker-compose.yml up -d
 
-# 4. Check status
+# 5. Check status
 docker-compose -f docker/docker-compose.yml logs -f
 
-# 5. Test your deployment:
+# 6. Test your deployment:
 # Website: http://your-server-ip/
 # API Health: http://your-server-ip/api/health
 # API Test: http://your-server-ip/api/status?token=YOUR_TOKEN
@@ -70,19 +75,19 @@ docker-compose -f docker/docker-compose.yml logs -f
 
 ```bash
 # 1. Clone the HeadlessX project
-git clone https://github.com/SaifyXPRO/HeadlessX.git
-cd HeadlessX
+git clone https://github.com/saifyxpro/headlessx.git
+cd headlessx
 
 # 2. Set up environment variables
 cp .env.example .env
-# Edit .env and replace REPLACE_WITH_YOUR_SECURE_RANDOM_TOKEN_HERE with a secure token
+# Edit .env with your domain and secure token
 nano .env
 
 # 3. Run the automated setup script
 chmod +x scripts/setup.sh
 ./scripts/setup.sh
 
-# Start with PM2
+# 4. Start with PM2
 pm2 start config/ecosystem.config.js
 pm2 save
 pm2 startup
@@ -209,6 +214,7 @@ Content-Type: application/json
 - 📤 [GET Endpoints Documentation](docs/GET_ENDPOINTS.md) - Detailed GET API reference
 - 📤 [POST Endpoints Documentation](docs/POST_ENDPOINTS.md) - Detailed POST API reference
 - 🌐 [Custom Domain Setup Guide](docs/DOMAIN_SETUP.md) - Complete domain configuration with SSL
+- 🎭 [Human Behavior Simulation](docs/HUMAN_BEHAVIOR_UPDATE.md) - Advanced anti-detection techniques
 - 🚀 [Quick Deployment Guide](DEPLOYMENT.md) - Fast deployment instructions
 
 ## 🔧 Make.com Integration

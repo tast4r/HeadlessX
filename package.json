@@ -40,12 +40,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/saifyxpro/n8n-nodes-headlessx.git"
+    "url": "git+https://github.com/saifyxpro/headlessx.git"
   },
   "bugs": {
-    "url": "https://github.com/saifyxpro/n8n-nodes-headlessx/issues"
+    "url": "https://github.com/saifyxpro/headlessx/issues"
   },
-  "homepage": "https://github.com/saifyxpro/n8n-nodes-headlessx#readme",
+  "homepage": "https://github.com/saifyxpro/headlessx#readme",
   "funding": {
     "type": "github",
     "url": "https://github.com/sponsors/saifyxpro"

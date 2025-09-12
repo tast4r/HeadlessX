@@ -11,15 +11,39 @@ HeadlessX has been reorganized into a clean, professional directory structure th
 ```
 📁 HeadlessX/
 ├── 📁 src/                         # Source code
+│   └── 📄 server.js                # Main HeadlessX server
 ├── 📁 config/                      # Configuration files
+│   ├── 📄 ecosystem.config.js      # PM2 configuration
+│   └── 📄 .env.example             # Environment template
 ├── 📁 docker/                      # Docker configuration
-├── 📁 scripts/                     # Utility scripts
-├── 📁 nginx/                       # Nginx configuration
+│   ├── 📄 docker-compose.yml       # Docker compose setup
+│   └── � Dockerfile               # Container definition
+├── �📁 scripts/                     # Utility scripts
+│   ├── � setup.sh                 # Automated setup script
+│   ├── 📄 verify-domain.sh         # Domain verification
+│   └── 📄 test-routing.sh          # Routing tests
+├── �📁 nginx/                       # Nginx configuration
+│   └── 📄 headlessx.conf           # Reverse proxy config
 ├── 📁 docs/                        # Documentation
+│   ├── 📖 DOMAIN_SETUP.md          # Domain configuration guide
+│   ├── 📖 GET_ENDPOINTS.md         # GET API reference
+│   ├── 📖 POST_ENDPOINTS.md        # POST API reference
+│   └── 📖 HUMAN_BEHAVIOR_UPDATE.md # Human behavior features
+├── 📁 website/                     # Landing page (Next.js)
+│   ├── 📄 package.json             # Website dependencies
+│   ├── 📁 app/                     # Next.js app directory
+│   └── 📁 components/              # React components
 ├── 📁 logs/                        # Application logs (auto-generated)
-├── 📄 package.json                 # Project dependencies and scripts
+├── 📄 package.json                 # Main project dependencies
+├── 📄 .env.example                 # Environment template (root)
 ├── 📄 .gitignore                   # Git ignore patterns
-└── 📚 README.md                    # Main project documentation
+├── 📄 LICENSE                      # MIT License
+├── � README.md                    # Main documentation
+├── 📄 CHANGELOG.md                 # Version history
+├── 📄 CONTRIBUTING.md              # Contribution guidelines
+├── 📄 SECURITY.md                  # Security policy
+├── 📄 DEPLOYMENT.md                # Quick deployment guide
+└── 📄 PROJECT_STRUCTURE.md         # This file
 ```
 
 ---
@@ -81,10 +105,10 @@ docs/
 ├── 📖 DOMAIN_SETUP.md              # Complete domain setup with SSL
 ├── 📖 GET_ENDPOINTS.md             # Complete GET API documentation
 ├── 📖 POST_ENDPOINTS.md            # Complete POST API documentation
-└── 📖 HUMAN_BEHAVIOR_UPDATE.md     # v1.1.0 enhancement details
+└── 📖 HUMAN_BEHAVIOR_UPDATE.md     # Advanced human behavior simulation features
 ```
 **Purpose**: Detailed project documentation
-**Note**: Main deployment guide moved to root `DEPLOYMENT.md`
+**Note**: Main deployment guide is in root `DEPLOYMENT.md`
 
 ### `/logs/` - Application Logs
 ```
