@@ -5,11 +5,11 @@ services:
       dockerfile: docker/Dockerfile
     container_name: headlessx
     ports:
-      - "3000:3000"    # Direct access to Node.js server (no nginx proxy needed)
+      - "1214:1214"    # Direct access to Node.js server (no nginx proxy needed)
     environment:
-      - DOMAIN=${DOMAIN:-localhost}            # Your domain
-      - SUBDOMAIN=${SUBDOMAIN:-headlessx}      # Your subdomain
-      - PORT=3000
+      - DOMAIN=${DOMAIN}            # Your domain
+      - SUBDOMAIN=${SUBDOMAIN}      # Your subdomain
+      - PORT=1214
       - NODE_ENV=production
       - UV_THREADPOOL_SIZE=128
       - NODE_OPTIONS=--max-old-space-size=4096
